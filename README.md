@@ -1,4 +1,4 @@
-# Alex Rivera — TPM Portfolio (macOS-style desktop)
+# Sakshi Beloshe — TPM Portfolio 
 
 A macOS-Finder-styled portfolio site. Boots into a loading screen, fades into a
 desktop with project folders, a draggable "About Me" window, a live menu bar,
