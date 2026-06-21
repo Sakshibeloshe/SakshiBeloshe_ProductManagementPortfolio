@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    <title>Sakshi Beloshe — Product Manager</title>
+    <meta name="description" content="Portfolio of Sakshi Beloshe, Product Manager & CS Student · MIT-WPU — ViCa (Apple WWDC 2026 Winner), Cyster, and Loan Management System." />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Load Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <!-- Boot Screen -->
+    <div id="boot-screen">
+      <img src="public/logo.jpg" alt="Logo" class="boot-logo" style="width: 80px; height: 80px; object-fit: contain; filter: invert(1); mix-blend-mode: screen;" />
+      <div class="boot-progress-container">
+        <div id="boot-progress-bar"></div>
+      </div>
+      <div class="boot-status">Loading portfolio…</div>
+    </div>
+
+    <!-- Desktop Environment -->
+    <div id="desktop-env" class="hidden">
+      <!-- Wallpaper background -->
+      <div class="desktop-wallpaper"></div>
+
+      <!-- Menu Bar -->
+      <div id="menu-bar">
+        <div class="menu-left">
+          <div class="menu-item bold" id="apple-menu-trigger">
+            <img src="public/logo.jpg" alt="Logo" />
+          </div>
+          <div class="menu-item" data-menu="Finder">Finder</div>
+          <div class="menu-item" data-menu="File">File</div>
+          <div class="menu-item" data-menu="Edit">Edit</div>
+          <div class="menu-item" data-menu="View">View</div>
+          <div class="menu-item" data-menu="Go">Go</div>
+          <div class="menu-item" data-menu="Window">Window</div>
+          <div class="menu-item" data-menu="Help">Help</div>
+        </div>
+        <div class="menu-right">
+          <div class="menu-icon" id="search-trigger" title="Search (⌘F)">
+            <i data-lucide="search" style="width: 14px; height: 14px;"></i>
+          </div>
+          <span id="menu-date"></span>
+          <span id="menu-time" style="font-weight: 500;"></span>
+        </div>
+      </div>
+
+      <!-- Menu Dropdowns Overlay Container -->
+      <div id="dropdown-overlay" class="hidden"></div>
+      <div id="active-dropdown" class="menu-dropdown hidden"></div>
+
+      <!-- Main Desktop Area -->
+      <div id="desktop-main">
+        <!-- About Me Widget -->
+        <div id="about-widget" class="desktop-widget" title="Click to open About Me">
+          <img src="public/about_widget.jpg" alt="About Me Sketch" class="widget-photos-img" />
+          <div class="widget-photos-overlay">
+            <span class="widget-photos-title">About Me</span>
+            <span class="widget-photos-subtitle">Click to know more</span>
+          </div>
+        </div>
+
+        <!-- Desktop Folder Icons -->
+        <div id="desktop-icons"></div>
+      </div>
+
+      <!-- Mobile Dashboard View -->
+      <div id="mobile-dashboard" class="hidden">
+        <div id="mobile-profile-widget">
+          <img id="mobile-profile-photo" src="" alt="Profile" />
+          <div>
+            <div id="mobile-profile-name" style="font-weight: 700; font-size: 15px; color: #1a1a1a;"></div>
+            <div id="mobile-profile-title" style="font-size: 12px; color: #777;"></div>
+          </div>
+        </div>
+        <div id="mobile-folders-grid"></div>
+      </div>
+
+      <!-- Windows container -->
+      <div id="windows-container"></div>
+
+      <!-- Dock -->
+      <div id="dock">
+        <div class="dock-wrapper">
+          <div class="dock-item" id="dock-search" title="Search">
+            <img src="public/icons/search.jpg?v=6" onerror="this.src='public/icons/search.png?v=6'" alt="Search" />
+            <div class="dock-tooltip">Search</div>
+          </div>
+          <div class="dock-divider"></div>
+          <div class="dock-item" id="dock-mail" title="Mail">
+            <img src="public/icons/mail.jpg?v=6" onerror="this.src='public/icons/mail.png?v=6'" alt="Mail" />
+            <div class="dock-tooltip">Mail</div>
+          </div>
+          <div class="dock-item" id="dock-linkedin" title="LinkedIn">
+            <img src="public/icons/linkedin.jpg?v=6" onerror="this.src='public/icons/linkedin.png?v=6'" alt="LinkedIn" />
+            <div class="dock-tooltip">LinkedIn</div>
+          </div>
+          <div class="dock-item" id="dock-github" title="GitHub">
+            <img src="public/icons/github.jpg?v=6" onerror="this.src='public/icons/github.png?v=6'" alt="GitHub" />
+            <div class="dock-tooltip">GitHub</div>
+          </div>
+          <div class="dock-item" id="dock-resume" title="Resume">
+            <img src="public/icons/resume.jpg?v=6" onerror="this.src='public/icons/resume.png?v=6'" alt="Resume" />
+            <div class="dock-tooltip">Resume</div>
+          </div>
+          
+          <!-- Dynamic Minimized Icons Split -->
+          <div id="dock-minimized-divider" class="dock-divider hidden"></div>
+          <div id="dock-minimized-items" style="display: flex; gap: 4px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spotlight Search Overlay -->
+    <div id="spotlight-search" class="hidden">
+      <div class="spotlight-card">
+        <div class="spotlight-header">
+          <i data-lucide="search" style="color: #888; width: 18px; height: 18px;"></i>
+          <input type="text" id="spotlight-input" placeholder="Search projects, about, contact…" autocomplete="off" />
+          <div id="spotlight-close" class="close-btn">
+            <i data-lucide="x" style="color: #999; width: 16px; height: 16px;"></i>
+          </div>
+        </div>
+        <div id="spotlight-results"></div>
+      </div>
+    </div>
+
+    <!-- Resume Viewer Overlay -->
+    <div id="resume-viewer" class="hidden">
+      <div class="resume-header">
+        <div id="resume-back" class="resume-back-btn">
+          <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i> Back
+        </div>
+        <div class="resume-title">Resume.pdf</div>
+        <a id="resume-download" href="" download class="resume-download-btn">
+          <i data-lucide="download" style="width: 14px; height: 14px;"></i> Download
+        </a>
+      </div>
+      <div class="resume-body">
+        <iframe id="resume-iframe" title="Resume" src=""></iframe>
+      </div>
+    </div>
+
+    <!-- Application Script -->
+    <script src="main.js"></script>
+  </body>
+</html>
