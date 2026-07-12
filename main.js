@@ -19,11 +19,19 @@ const PROFILE = {
         "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=75&w=400"
     ],
     photo: "public/profile.jpg",
-    bio: "Final-year B.Tech Computer Science student (MIT-WPU, 2027) with hands-on experience building and shipping consumer-facing mobile products from ideation to launch. Apple WWDC 2026 Winner — shipped ViCa, a proximity-based networking product with real users.\n\nExperienced in product requirements, user research, backlog management, sprint cycles, and data-driven decision making. Excited to drive growth for digital-first consumer brands at the intersection of product, analytics, and user experience.",
+    bio: "Final-year B.Tech Computer Science student (MIT-WPU, 2027) with hands-on experience building and shipping consumer-facing mobile products from ideation to launch. Apple WWDC 2026 Winner — shipped ViCa, a proximity-based networking product with real users.\n\nExperienced in product requirements, user research, backlog management, sprint cycles, and data-driven decision making. Excited to drive growth for digital-first consumer brands at the intersection of product, analytics, and user experience.\n\nI think in systems, ship in sprints, and measure in outcomes. Currently looking for PM, data, or SDE internships where I can own things end-to-end.",
     skills: [
-        "PRDs & User Stories", "Backlog Management", "Sprint Planning", "MVP Definition",
-        "User Research", "A/B Testing", "Funnel Analysis", "SQL / Pandas",
-        "Figma (basic)", "Agile / Scrum", "REST APIs", "Roadmapping"
+        "PRDs & User Stories", "User Stories", "Roadmapping", "A/B Testing",
+        "Funnel Analysis", "UAT", "Backlog Management", "Sprint Planning",
+        "MVP Definition", "User Research", "Agile / Scrum",
+        "Python", "SQL", "Go", "Figma (basic)", "REST APIs"
+    ],
+    achievements: [
+        { emoji: "🏆", title: "Apple WWDC 2026 Winner", detail: "Swift Student Challenge — shipped ViCa, selected globally by Apple." },
+        { emoji: "📝", title: "Patent Filed", detail: "Utility patent on Cyster's cycle-phase symptom-trigger correlation engine." },
+        { emoji: "📈", title: "WorldQuant IQC", detail: "Competed in the WorldQuant International Quant Championship." },
+        { emoji: "🇮🇳", title: "SIH Finalist", detail: "Smart India Hackathon national finalist." },
+        { emoji: "🎯", title: "Trademaxx Head", detail: "Led Trademaxx, MIT-WPU's trading & finance club." }
     ],
     experience: [
         { company: "Infosys, Mysore", role: "Product & Development Intern", years: "Apr 2026 – May 2026" },
@@ -70,7 +78,8 @@ const PROJECTS = [
             { label: "WWDC Winner", value: "🏆" },
             { label: "Platforms", value: "2" },
             { label: "Card Types", value: "4" },
-            { label: "Internet Needed", value: "0" }
+            { label: "Internet Needed", value: "0" },
+            { label: "Confirmation Window", value: "3 sec" }
         ],
         tech: ["Swift", "SwiftUI", "Core Bluetooth (BLE)", "Jetpack Compose", "Nearby Connections API"],
         screenshots: ["Card selection", "Personal card", "Nearby users", "Exchange confirmation", "Event Mode", "Card collection"]
@@ -113,15 +122,16 @@ const PROJECTS = [
             { label: "Patent", value: "Filed" },
             { label: "Cycle Phases Tracked", value: "4" },
             { label: "Core Tabs", value: "4" },
-            { label: "AI Engine", value: "Adira" }
+            { label: "AI Engine", value: "Adira" },
+            { label: "Health Records Trained", value: "10k+" }
         ],
         tech: ["React Native", "LLM / Prompt Engineering", "SharedContextEngine", "Statistical Correlation Modeling"],
         screenshots: ["Home dashboard", "Cycle phase view", "Diet tab", "Workout tab", "Adira chat", "Correlation insight"]
     },
     {
         id: "lms",
-        name: "LMS",
-        tagline: "Loan Management System · 3-app microservice platform",
+        name: "Loan Management System",
+        tagline: "LMS · 3-app microservice platform",
         emoji: "🏦",
         coverGradient: "linear-gradient(135deg, #2b5876 0%, #4e4376 100%)",
         badges: ["Go", "gRPC", "Microservices", "Infosys Internship"],
@@ -210,9 +220,12 @@ function getCysterPageHTML(project) {
           </div>
         </div>
         <div class="cyster-hero-right">
-          <div style="display: flex; gap: 8px; justify-content: center; align-items: center; background: rgba(225,29,72,0.05); padding: 16px; border-radius: 24px; border: 1px solid rgba(225,29,72,0.1);">
-            <div class="phone-mockup" style="max-width: 110px; border-radius: 16px; border-width: 4px;">
-              <img src="public/projects/cyster/home_tab.jpg" alt="Cyster Onboarding" />
+          <div style="display: flex; gap: 10px; justify-content: center; align-items: center; background: rgba(225,29,72,0.05); padding: 16px; border-radius: 24px; border: 1px solid rgba(225,29,72,0.1);">
+            <div class="phone-mockup" style="max-width: 105px; border-radius: 16px; border-width: 4px;">
+              <img src="public/projects/cyster/home_tab.jpg" alt="Cyster Home" />
+            </div>
+            <div class="phone-mockup" style="max-width: 105px; border-radius: 16px; border-width: 4px;">
+              <img src="public/projects/cyster/home_tab(2).jpg" alt="Cyster Home Variant" />
             </div>
           </div>
         </div>
@@ -286,7 +299,30 @@ function getCysterPageHTML(project) {
 
         <div class="cyster-panel cyster-panel-dark" style="display: flex; justify-content: center; align-items: center;">
           <div class="phone-mockup" style="max-width: 250px;">
-            <img src="public/projects/cyster/confirm_meal.jpg" alt="Meal Log Confirmation Screen" />
+            <img src="public/projects/cyster/home_tab(3).jpg" alt="Adira Insights View" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4b: Correlation Engine (numbered phases) -->
+      <div class="cyster-panel cyster-panel-dark" style="margin-top: 24px; background: #1a0a10; border: 1px solid rgba(225,29,72,0.15);">
+        <div class="cyster-panel-tag" style="color: #f9a8d4;">Correlation Engine</div>
+        <h2 class="cyster-panel-title" style="color: #ffffff;">3-Phase Symptom-Trigger Intelligence</h2>
+        <p class="cyster-panel-text" style="color: rgba(255,255,255,0.75); margin-bottom: 20px;">
+          The patent-filed engine that makes Adira's recommendations meaningful — built in three progressive phases.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <div style="min-width: 28px; height: 28px; border-radius: 50%; background: rgba(249,168,212,0.15); border: 1px solid rgba(249,168,212,0.3); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; color: #f9a8d4;">1</div>
+            <div><div style="font-weight: 700; color: #ffffff; font-size: 13.5px; margin-bottom: 3px;">Rule-Based &mdash; <span style="font-weight: 400; color: rgba(255,255,255,0.6);">Shipped</span></div><p style="font-size: 12.5px; color: rgba(255,255,255,0.6); margin: 0; line-height: 1.5;">Hardcoded correlations: e.g. high sugar intake + luteal phase &rarr; flags inflammation risk automatically.</p></div>
+          </div>
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <div style="min-width: 28px; height: 28px; border-radius: 50%; background: rgba(249,168,212,0.15); border: 1px solid rgba(249,168,212,0.3); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; color: #f9a8d4;">2</div>
+            <div><div style="font-weight: 700; color: #ffffff; font-size: 13.5px; margin-bottom: 3px;">Statistical &mdash; <span style="font-weight: 400; color: rgba(255,255,255,0.6);">In Progress</span></div><p style="font-size: 12.5px; color: rgba(255,255,255,0.6); margin: 0; line-height: 1.5;">Personal confidence scoring: &ldquo;dairy correlates with your bloating 71% of the time&rdquo; — surfaced directly in Adira.</p></div>
+          </div>
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <div style="min-width: 28px; height: 28px; border-radius: 50%; background: rgba(249,168,212,0.15); border: 1px solid rgba(249,168,212,0.3); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; color: #f9a8d4;">3</div>
+            <div><div style="font-weight: 700; color: #ffffff; font-size: 13.5px; margin-bottom: 3px;">AI-Integrated &mdash; <span style="font-weight: 400; color: rgba(255,255,255,0.6);">Roadmap</span></div><p style="font-size: 12.5px; color: rgba(255,255,255,0.6); margin: 0; line-height: 1.5;">Validated personal correlations feed directly into Adira's LLM prompts, making every chat uniquely yours.</p></div>
           </div>
         </div>
       </div>
@@ -315,8 +351,8 @@ function getCysterPageHTML(project) {
           <div class="cyster-stat-lbl">Shared Context AI</div>
         </div>
         <div class="cyster-stat-box">
-          <div class="cyster-stat-num">100%</div>
-          <div class="cyster-stat-lbl">Personalized</div>
+          <div class="cyster-stat-num">10k+</div>
+          <div class="cyster-stat-lbl">Health Records Trained</div>
         </div>
       </div>
     </div>
@@ -329,8 +365,8 @@ function getLMSPageHTML(project) {
       <div class="lms-hero">
         <div class="lms-hero-left">
           <div class="lms-badge">🏦 Infosys Internship · Microservices</div>
-          <h1 class="lms-huge-title">LMS</h1>
-          <p class="lms-subtitle">Loan Management System · 3-app microservice platform</p>
+          <h1 class="lms-huge-title">Loan Management System</h1>
+          <p class="lms-subtitle">LMS · 3-app microservice platform</p>
           
           <div class="lms-meta-grid">
             <div class="lms-meta-cell">
@@ -388,14 +424,17 @@ function getLMSPageHTML(project) {
       <!-- Section 3: Core UI Showcase (Customize Loans & Descriptions in mockups) -->
       <div class="vica-grid-2col" style="margin-top: 24px;">
         <div class="lms-panel lms-panel-dark">
-          <div style="display: flex; justify-content: center; margin-bottom: 16px;">
-            <div class="phone-mockup" style="max-width: 250px;">
+          <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 16px;">
+            <div class="phone-mockup" style="max-width: 130px;">
               <img src="public/projects/lms/customize_loans_screen.jpg" alt="Customize Loans Screen" />
             </div>
+            <div class="phone-mockup" style="max-width: 130px;">
+              <img src="public/projects/lms/score_breakdwon_screen.jpg" alt="Credit Score Breakdown" />
+            </div>
           </div>
-          <h3 class="vica-section-subtitle" style="color: #0d1727;">Interactive Interest Adjuster</h3>
+          <h3 class="vica-section-subtitle" style="color: #0d1727;">Borrower + Bank Perspectives</h3>
           <p class="lms-panel-text" style="font-size: 13.5px; opacity: 0.85;">
-            Dynamic interest selectors allow prospective borrowers to slide loan durations and amounts, getting real-time reducing-balance EMI breakdown tables calculated directly via our Go finance modules.
+            Left: borrowers adjust loan parameters with a live reducing-balance EMI calculator. Right: bank officers see a full CIBIL / FOIR / LTV breakdown — two completely different role-views built on the same underlying gRPC data layer.
           </p>
         </div>
 
@@ -427,6 +466,18 @@ function getLMSPageHTML(project) {
             <img src="public/projects/lms/credit_score_screen.jpg" alt="Credit Score Analytics View" />
           </div>
         </div>
+      </div>
+
+      <!-- Section 4b: My PM Role -->
+      <div class="lms-panel lms-panel-lightblue" style="margin-top: 24px; border-left: 4px solid #0284c7;">
+        <div class="lms-panel-tag">My PM Role</div>
+        <h2 class="lms-panel-title">PM + Engineer in One Seat</h2>
+        <p class="lms-panel-text" style="margin-bottom: 16px;">
+          I wrote user stories and acceptance criteria before any development started. I ran sprint planning and retrospectives as Scrum Master across a 5-person team.
+        </p>
+        <p class="lms-panel-text">
+          I also coded the EMI engine in Go — this dual PM + engineer role is rare and worth calling out. I could write the requirement, own the technical implementation, and validate it against the acceptance criteria myself. No handoff loss.
+        </p>
       </div>
 
       <!-- Section 5: Key Decision (Grey panel for decision) -->
@@ -486,7 +537,14 @@ function getViCaPageHTML(project) {
           </div>
         </div>
         <div class="vica-hero-right">
-          <img src="public/projects/vica/vica_app_icon.png" class="vica-app-icon-img" alt="ViCa App Icon" />
+          <div style="display: flex; gap: 10px; justify-content: center; align-items: center; background: rgba(255,126,179,0.07); padding: 16px; border-radius: 24px; border: 1px solid rgba(255,126,179,0.15);">
+            <div class="phone-mockup" style="max-width: 105px; border-radius: 16px; border-width: 4px;">
+              <img src="public/projects/vica/opening_1.jpeg" alt="ViCa Onboarding Screen 1" />
+            </div>
+            <div class="phone-mockup" style="max-width: 105px; border-radius: 16px; border-width: 4px;">
+              <img src="public/projects/vica/opening_2.jpeg" alt="ViCa Onboarding Screen 2" />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -522,14 +580,17 @@ function getViCaPageHTML(project) {
       <!-- Section 3: Core UI Showcase (My Stack & Connections tabs in mockups) -->
       <div class="vica-grid-2col" style="margin-top: 24px;">
         <div class="vica-panel vica-panel-dark">
-          <div style="display: flex; justify-content: center; margin-bottom: 16px;">
-            <div class="phone-mockup" style="max-width: 250px;">
-              <img src="public/projects/vica/myCards_tab.PNG" alt="My Stack Tab" />
+          <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 16px;">
+            <div class="phone-mockup" style="max-width: 130px;">
+              <img src="public/projects/vica/myCards_tab.PNG" alt="My Cards Tab" />
+            </div>
+            <div class="phone-mockup" style="max-width: 130px;">
+              <img src="public/projects/vica/addCard_tab.jpeg" alt="Add Card Tab" />
             </div>
           </div>
           <h3 class="vica-section-subtitle">Contextual Card Types</h3>
           <p class="vica-panel-text" style="font-size: 13.5px; opacity: 0.85;">
-            Personal, Business, Social, and Event cards. Context changes what you share. You don't hand your LinkedIn to everyone at a party, or your Instagram to everyone at a networking event. ViCa lets you pick the right card for the moment.
+            Personal, Business, Social, and Event cards. Context changes what you share. You don't hand your LinkedIn to everyone at a party, or your Instagram to everyone at a networking event. ViCa lets you pick the right card for the moment — and create new ones in seconds.
           </p>
         </div>
 
@@ -591,8 +652,12 @@ function getViCaPageHTML(project) {
           <div class="vica-stat-lbl">Card Types</div>
         </div>
         <div class="vica-stat-box">
-          <div class="vica-stat-num">100%</div>
-          <div class="vica-stat-lbl">Offline-First</div>
+          <div class="vica-stat-num">0</div>
+          <div class="vica-stat-lbl">Internet Needed</div>
+        </div>
+        <div class="vica-stat-box">
+          <div class="vica-stat-num">3 sec</div>
+          <div class="vica-stat-lbl">Confirmation Window</div>
         </div>
       </div>
     </div>
@@ -716,14 +781,19 @@ function getAboutPageHTML() {
   `).join('');
     return `
     <div>
-      <div class="window-cover" style="background: linear-gradient(135deg, #a8d5a2 0%, #c8e6c9 40%, #b3d9d3 100%)"></div>
+      <div class="window-cover" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #4c1d95 60%, #6d28d9 100%); position: relative; overflow: hidden;">
+        <div style="position: absolute; inset: 0; background: url('public/about_widget.jpg') center/cover no-repeat; opacity: 0.15;"></div>
+      </div>
       <div class="window-page-content">
-        <div class="page-header" style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 24px;">
-          <img src="public/profile.jpg" alt="Profile" class="profile-avatar" style="width: 84px; height: 84px; border-radius: 50%; object-fit: cover; object-position: 50% 28%; border: 3px solid rgba(255, 255, 255, 0.85); box-shadow: 0 4px 14px rgba(0,0,0,0.12); margin-bottom: 16px;" />
-          <h1 class="project-title" style="font-size: 26px; font-weight: 800; color: #0f172a; margin-bottom: 6px; letter-spacing: -0.02em;">${PROFILE.name}</h1>
-          <p class="project-tagline" style="font-size: 13.5px; color: #475569; margin-bottom: 12px; line-height: 1.4;">${PROFILE.title} · ${PROFILE.location}</p>
-          <div class="badge-container" style="display: flex; justify-content: center; gap: 6px;">
-            <span class="page-badge" style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 99px; background: rgba(76, 175, 80, 0.08); color: #2e7d32; border: 1px solid rgba(76, 175, 80, 0.15);">${PROFILE.status}</span>
+        <div style="display: flex; align-items: flex-start; gap: 18px; margin-bottom: 24px; flex-wrap: wrap;">
+          <img src="public/profile.jpg" alt="Profile" style="width: 86px; height: 86px; border-radius: 14px; object-fit: cover; object-position: 50% 28%; border: 3px solid rgba(255,255,255,0.85); box-shadow: 0 4px 18px rgba(0,0,0,0.14); flex-shrink: 0;" />
+          <div style="flex: 1; min-width: 160px;">
+            <h1 style="font-size: 23px; font-weight: 800; color: #0f172a; margin: 0 0 4px; letter-spacing: -0.02em;">${PROFILE.name}</h1>
+            <p style="font-size: 13px; color: #475569; margin: 0 0 10px; line-height: 1.4;">${PROFILE.title} · ${PROFILE.location}</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 99px; background: rgba(109,40,217,0.08); color: #6d28d9; border: 1px solid rgba(109,40,217,0.18);">${PROFILE.status}</span>
+              <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 99px; background: rgba(234,179,8,0.08); color: #b45309; border: 1px solid rgba(234,179,8,0.2);">&#127942; WWDC 2026 Winner</span>
+            </div>
           </div>
         </div>
 
@@ -754,27 +824,17 @@ function getAboutPageHTML() {
 
         <div class="section-divider"></div>
         <div>
-          <h2 class="section-title">Key Highlights</h2>
-          <div class="highlights-grid" style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 16px; margin-top: 12px;">
-            <div class="highlight-item" style="border-left: 3px solid #2e7d32; padding-left: 14px;">
-              <h3 class="highlight-title" style="font-size: 13.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Apple WWDC 2026 Winner</h3>
-              <p class="highlight-detail" style="font-size: 12.5px; color: #475569; line-height: 1.5; margin: 0;">Designed and shipped ViCa, a proximity-based contact sharing app using BLE (Bluetooth Low Energy), selected as a global student challenge winner by Apple.</p>
-            </div>
-            <div class="highlight-item" style="border-left: 3px solid #0284c7; padding-left: 14px;">
-              <h3 class="highlight-title" style="font-size: 13.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Patent-Filed Product Lead</h3>
-              <p class="highlight-detail" style="font-size: 12.5px; color: #475569; line-height: 1.5; margin: 0;">Built Cyster, a cycle-phase aware health assistant with a custom correlation engine to analyze PCOS triggers. Filed a utility patent for the logic.</p>
-            </div>
-            <div class="highlight-item" style="border-left: 3px solid #6366f1; padding-left: 14px;">
-              <h3 class="highlight-title" style="font-size: 13.5px; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Agile Product Internship</h3>
-              <p class="highlight-detail" style="font-size: 12.5px; color: #475569; line-height: 1.5; margin: 0;">Served as Scrum Master and Backend Developer at Infosys, leading sprints and building a reduction-balance EMI engine for a multi-role Loan System.</p>
-            </div>
+          <h2 class="section-title">Achievements</h2>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+            ${PROFILE.achievements.map(a => `<div style="display:flex;align-items:flex-start;gap:14px;padding:12px 14px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0;"><div style="font-size:20px;line-height:1;margin-top:1px;">${a.emoji}</div><div><div style="font-size:13.5px;font-weight:700;color:#0f172a;margin-bottom:3px;">${a.title}</div><div style="font-size:12.5px;color:#475569;line-height:1.5;">${a.detail}</div></div></div>`).join('')}
           </div>
         </div>
 
         <div class="section-divider"></div>
         <div>
-          <h2 class="section-title">Skills & Competencies</h2>
-          <div class="tech-tag-container" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;">${skillsHTML}</div>
+          <h2 class="section-title">Skills &amp; Competencies</h2>
+          <p style="font-size: 11px; color: #94a3b8; margin-top: 4px; margin-bottom: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em;">PM Skills first · Technical below</p>
+          <div class="tech-tag-container" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0;">${skillsHTML}</div>
         </div>
 
         <div class="section-divider"></div>
@@ -1088,14 +1148,18 @@ function openResume() {
     state.resumeOpen = true;
     const viewer = document.getElementById('resume-viewer');
     viewer?.classList.remove('hidden');
-    // Set iframe and link paths
+    // Build absolute URL for the resume PDF (needed for Google Docs Viewer)
+    const absoluteResumeUrl = new URL(PROFILE.resumeUrl, window.location.href).href;
+    // Use Google Docs Viewer so PDF renders inline even on GitHub Pages,
+    // which forces downloads via Content-Disposition: attachment headers.
+    const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteResumeUrl)}&embedded=true`;
     const iframe = document.getElementById('resume-iframe');
     if (iframe && !iframe.src) {
-        iframe.src = PROFILE.resumeUrl;
+        iframe.src = googleDocsViewerUrl;
     }
     const downloadBtn = document.getElementById('resume-download');
     if (downloadBtn) {
-        downloadBtn.href = PROFILE.resumeUrl;
+        downloadBtn.href = absoluteResumeUrl;
     }
 }
 function closeResume() {
