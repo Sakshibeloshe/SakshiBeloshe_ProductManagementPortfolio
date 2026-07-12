@@ -39,6 +39,14 @@ const PROFILE = {
         { company: "MIT World Peace University", role: "B.Tech Computer Science Engineering · CGPA 8.66", years: "2023 – 2027" }
     ]
 };
+const WALLPAPERS = [
+    { id: 'default',   name: 'Classic',   css: "url('public/wallpaper.jpg') center/cover no-repeat", color: '#7fa8c9' },
+    { id: 'monterey',  name: 'Monterey',  css: 'linear-gradient(160deg,#0f0c29 0%,#302b63 50%,#24243e 100%)', color: '#302b63' },
+    { id: 'sonoma',    name: 'Sonoma',    css: 'linear-gradient(160deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%)', color: '#fd1d1d' },
+    { id: 'aurora',    name: 'Aurora',    css: 'linear-gradient(160deg,#005c97 0%,#363795 50%,#00b4db 100%)', color: '#00b4db' },
+    { id: 'mojave',    name: 'Mojave',    css: 'linear-gradient(160deg,#2c3e50 0%,#fd746c 50%,#ff9068 100%)', color: '#fd746c' },
+    { id: 'midnight',  name: 'Midnight',  css: 'linear-gradient(160deg,#000000 0%,#0f0c29 50%,#1a1a2e 100%)', color: '#1a1a2e' },
+];
 const PROJECTS = [
     {
         id: "vica",
@@ -180,7 +188,11 @@ const state = {
     selectedIcon: null,
     searchOpen: false,
     resumeOpen: false,
-    isMobile: false
+    isMobile: false,
+    currentWallpaper: 'default',
+    soundEnabled: false,
+    darkWindows: false,
+    controlCenterOpen: false,
 };
 /* ──────────────────────────────────────────────────────────────────────────
    HTML Template Generators
@@ -922,9 +934,14 @@ function openWindow(id, type) {
         winEl.style.maxHeight = `calc(100vh - 132px)`;
     }
     const isProject = type === 'project';
+    const isTerminal = type === 'terminal';
     const project = isProject ? PROJECTS.find(p => p.id === id) : null;
-    const title = isProject && project ? `${project.emoji}  ${project.name}` : "👤  About Me";
-    const bodyContent = isProject && project ? getProjectPageHTML(project) : getAboutPageHTML();
+    const title = isTerminal ? '⌨️  Terminal' : (isProject && project ? `${project.emoji}  ${project.name}` : '👤  About Me');
+    const bodyContent = isTerminal ? getTerminalHTML() : (isProject && project ? getProjectPageHTML(project) : getAboutPageHTML());
+    if (isTerminal) {
+        winEl.style.width = '680px';
+        winEl.style.height = 'min(60vh, 500px)';
+    }
     winEl.innerHTML = `
     <div class="window-header" id="win-header-${id}">
       <div class="window-controls">
@@ -972,6 +989,13 @@ function openWindow(id, type) {
             openResume();
         });
     }
+    // Setup terminal if terminal type
+    if (type === 'terminal') {
+        winEl.classList.add('terminal-window');
+        setTimeout(() => setupTerminal(), 50);
+    }
+    // Sound
+    playSound('open');
     bringToFront(id);
     renderDock();
     updateDesktopDotStates();
@@ -985,6 +1009,7 @@ function closeWindow(id) {
     if (win) {
         win.remove();
     }
+    playSound('close');
     state.windows = state.windows.filter(w => w.id !== id);
     state.minimized = state.minimized.filter(w => w !== id);
     if (state.activeWindow === id) {
@@ -1142,6 +1167,280 @@ function renderSpotlightResults(query) {
     });
 }
 /* ──────────────────────────────────────────────────────────────────────────
+   Terminal Window
+   ────────────────────────────────────────────────────────────────────────── */
+function getTerminalHTML() {
+    return `
+    <div class="terminal-container" id="terminal-container" onclick="document.getElementById('terminal-input')?.focus()">
+      <div class="terminal-output" id="terminal-output">
+        <div class="term-line"><span class="term-green">Sakshi's Portfolio Terminal</span> <span class="term-dim">v1.0.0</span></div>
+        <div class="term-line term-dim">────────────────────────────────────────</div>
+        <div class="term-line"><span class="term-dim">Type </span><span class="term-yellow">help</span><span class="term-dim"> for available commands.</span></div>
+        <div class="term-line">&nbsp;</div>
+      </div>
+      <div class="terminal-input-row">
+        <span class="terminal-prompt"><span class="term-green">sakshi</span><span class="term-dim">@portfolio</span><span class="term-white"> ~ %&nbsp;</span></span>
+        <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" autocorrect="off" />
+      </div>
+    </div>
+  `;
+}
+const TERMINAL_CMDS = {
+    help: () => [
+        { t: 'Available commands:', c: 'term-yellow' },
+        { t: '  help         — Show this help', c: '' },
+        { t: '  whoami       — Display user info', c: '' },
+        { t: '  about        — About Sakshi Beloshe', c: '' },
+        { t: '  skills       — PM & technical skills', c: '' },
+        { t: '  projects     — List all projects', c: '' },
+        { t: '  open <id>    — Open project (vica | cyster | lms | about)', c: '' },
+        { t: '  contact      — Contact information', c: '' },
+        { t: '  neofetch     — System info 🍎', c: '' },
+        { t: '  easteregg    — Something special 🎉', c: '' },
+        { t: '  clear        — Clear terminal', c: '' },
+    ],
+    whoami: () => [{ t: 'sakshi-beloshe', c: 'term-green' }],
+    about: () => [
+        { t: 'Sakshi Beloshe', c: 'term-green' },
+        { t: 'Product Manager & CS Student · MIT-WPU (2027)', c: '' },
+        { t: '🏆 Apple WWDC 2026 Swift Student Challenge Winner', c: 'term-yellow' },
+        { t: '📝 Patent Filed — Cyster Correlation Engine', c: '' },
+        { t: 'Open to PM, data, and SDE internships.', c: 'term-dim' },
+    ],
+    skills: () => [
+        { t: '── PM Skills ─────────────────────────────────', c: 'term-green' },
+        { t: '  PRDs & User Stories · Roadmapping · A/B Testing', c: '' },
+        { t: '  Funnel Analysis · UAT · Backlog Management', c: '' },
+        { t: '  Sprint Planning · MVP Definition · User Research', c: '' },
+        { t: '  Agile / Scrum', c: '' },
+        { t: '── Technical ──────────────────────────────────', c: 'term-blue' },
+        { t: '  Python · SQL · Go · Figma (basic) · REST APIs', c: '' },
+    ],
+    projects: () => [
+        { t: '── Projects ───────────────────────────────────', c: 'term-yellow' },
+        { t: '  📇  vica    ViCa — Offline-first digital identity sharing', c: '' },
+        { t: '             🏆 Apple WWDC 2026 · iOS + Android', c: 'term-dim' },
+        { t: '  🌸  cyster  Cyster — AI-powered PCOS health companion', c: '' },
+        { t: '             📝 Patent Filed · React Native · LLM', c: 'term-dim' },
+        { t: '  🏦  lms     Loan Management System — 3-app microservices', c: '' },
+        { t: '             Go · gRPC · Infosys Internship', c: 'term-dim' },
+        { t: '&nbsp;', c: '' },
+        { t: "  Tip: type 'open vica' to open a project window.", c: 'term-dim' },
+    ],
+    contact: () => [
+        { t: '── Contact ────────────────────────────────────', c: 'term-green' },
+        { t: `  Email:    ${PROFILE.email}`, c: '' },
+        { t: `  LinkedIn: ${PROFILE.linkedin}`, c: 'term-blue' },
+        { t: `  GitHub:   ${PROFILE.github}`, c: 'term-dim' },
+    ],
+    neofetch: () => [
+        { t: '               sakshi@portfolio', c: 'term-green' },
+        { t: '  ████████     ─────────────────────────────', c: 'term-green' },
+        { t: '  ████████     OS:       Portfolio OS 1.0', c: 'term-white' },
+        { t: '  ████████     CPU:      PM Brain (Overclocked)', c: 'term-white' },
+        { t: '  ████████     RAM:      ∞ Ideas Available', c: 'term-white' },
+        { t: '  ████████     Shell:    Portfolio Terminal v1.0', c: 'term-white' },
+        { t: '  ████████     Projects: ViCa, Cyster, LMS', c: 'term-white' },
+        { t: '               Status:   Open to Internships ✅', c: 'term-yellow' },
+        { t: '               Awards:   🏆 WWDC 2026 Winner', c: 'term-yellow' },
+    ],
+    easteregg: () => [
+        { t: '  🎉 ─────────────────────────────────── 🍎', c: 'term-yellow' },
+        { t: '&nbsp;', c: '' },
+        { t: '  "The moment two people decide to connect', c: 'term-green' },
+        { t: '   should be instant and effortless."', c: 'term-green' },
+        { t: '&nbsp;', c: '' },
+        { t: '   — ViCa by Sakshi Beloshe, WWDC 2026', c: 'term-dim' },
+        { t: '&nbsp;', c: '' },
+        { t: '  🏆 Apple Swift Student Challenge Winner 🏆', c: 'term-yellow' },
+        { t: '  🎉 ─────────────────────────────────── 🍎', c: 'term-yellow' },
+    ],
+};
+function appendTerminalLine(text, cls) {
+    const out = document.getElementById('terminal-output');
+    if (!out) return;
+    const el = document.createElement('div');
+    el.className = `term-line ${cls || ''}`;
+    el.innerHTML = text || '&nbsp;';
+    out.appendChild(el);
+    out.scrollTop = out.scrollHeight;
+}
+function processTerminalCommand(raw) {
+    const parts = raw.trim().split(/\s+/);
+    const cmd = parts[0].toLowerCase();
+    const arg = parts[1]?.toLowerCase();
+    playSound('click');
+    if (cmd === 'clear') {
+        const out = document.getElementById('terminal-output');
+        if (out) out.innerHTML = '';
+        return;
+    }
+    if (cmd === 'open') {
+        const valid = ['vica', 'cyster', 'lms', 'about'];
+        if (arg && valid.includes(arg)) {
+            appendTerminalLine(`Opening <span class="term-green">${arg}</span>…`, 'term-dim');
+            setTimeout(() => openWindow(arg, arg === 'about' ? 'about' : 'project'), 300);
+        } else {
+            appendTerminalLine(`open: no such target '${arg || ''}'`, 'term-red');
+            appendTerminalLine("Try: open vica · open cyster · open lms · open about", 'term-dim');
+        }
+        appendTerminalLine('', '');
+        return;
+    }
+    const handler = TERMINAL_CMDS[cmd];
+    if (handler) {
+        handler().forEach(l => appendTerminalLine(l.t, l.c));
+    } else {
+        appendTerminalLine(`command not found: ${cmd}`, 'term-red');
+        appendTerminalLine("Type 'help' for a list of commands.", 'term-dim');
+    }
+    appendTerminalLine('', '');
+}
+function setupTerminal() {
+    const input = document.getElementById('terminal-input');
+    if (!input) return;
+    input.focus();
+    let history = [];
+    let histIdx = -1;
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const cmd = input.value.trim();
+            input.value = '';
+            histIdx = -1;
+            if (!cmd) return;
+            history.unshift(cmd);
+            appendTerminalLine(`<span class="term-green">sakshi</span><span class="term-dim">@portfolio</span><span class="term-white"> ~ %</span> ${cmd}`, '');
+            processTerminalCommand(cmd);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (histIdx < history.length - 1) input.value = history[++histIdx];
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (histIdx > 0) { input.value = history[--histIdx]; }
+            else { histIdx = -1; input.value = ''; }
+        }
+    });
+}
+/* ──────────────────────────────────────────────────────────────────────────
+   Sound Utility (Web Audio API — no external files)
+   ────────────────────────────────────────────────────────────────────────── */
+let _audioCtx = null;
+function getAudioCtx() {
+    if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return _audioCtx;
+}
+function playSound(type) {
+    if (!state.soundEnabled) return;
+    try {
+        const ctx = getAudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        if (type === 'click') {
+            osc.frequency.value = 880;
+            gain.gain.setValueAtTime(0.06, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.08);
+        } else if (type === 'open') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, ctx.currentTime);
+            osc.frequency.linearRampToValueAtTime(660, ctx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.08, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.2);
+        } else if (type === 'close') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(660, ctx.currentTime);
+            osc.frequency.linearRampToValueAtTime(330, ctx.currentTime + 0.12);
+            gain.gain.setValueAtTime(0.07, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.15);
+        }
+    } catch (_) {}
+}
+/* ──────────────────────────────────────────────────────────────────────────
+   Wallpaper & Dark Windows
+   ────────────────────────────────────────────────────────────────────────── */
+function setWallpaper(id) {
+    const wp = WALLPAPERS.find(w => w.id === id);
+    if (!wp) return;
+    state.currentWallpaper = id;
+    const el = document.querySelector('.desktop-wallpaper');
+    if (el) el.style.background = wp.css;
+    document.querySelectorAll('.cc-wp-swatch').forEach(s => {
+        s.classList.toggle('active', s.dataset.id === id);
+    });
+}
+function applyDarkWindows(enabled) {
+    document.querySelectorAll('.app-window').forEach(win => {
+        win.classList.toggle('dark-window', enabled);
+    });
+    document.documentElement.classList.toggle('dark-windows', enabled);
+}
+/* ──────────────────────────────────────────────────────────────────────────
+   Control Center
+   ────────────────────────────────────────────────────────────────────────── */
+function renderControlCenter() {
+    const grid = document.getElementById('cc-wallpaper-grid');
+    if (grid) {
+        grid.innerHTML = WALLPAPERS.map(wp => `
+          <div class="cc-wp-swatch ${state.currentWallpaper === wp.id ? 'active' : ''}"
+               data-id="${wp.id}"
+               style="background: ${wp.css.startsWith('url') ? '#7fa8c9' : wp.color};"
+               title="${wp.name}">
+            <span class="cc-wp-name">${wp.name}</span>
+          </div>
+        `).join('');
+        grid.querySelectorAll('.cc-wp-swatch').forEach(el => {
+            el.addEventListener('click', () => {
+                setWallpaper(el.dataset.id);
+                playSound('click');
+            });
+        });
+    }
+    const soundKnob = document.getElementById('cc-sound-knob');
+    const soundToggle = document.getElementById('cc-sound-toggle');
+    if (soundToggle) {
+        soundToggle.classList.toggle('on', state.soundEnabled);
+        soundToggle.addEventListener('click', () => {
+            state.soundEnabled = !state.soundEnabled;
+            soundToggle.classList.toggle('on', state.soundEnabled);
+            if (soundKnob) soundKnob.style.transform = state.soundEnabled ? 'translateX(20px)' : 'translateX(0)';
+            if (state.soundEnabled) playSound('click');
+        });
+    }
+    const darkKnob = document.getElementById('cc-dark-knob');
+    const darkToggle = document.getElementById('cc-dark-toggle');
+    if (darkToggle) {
+        darkToggle.classList.toggle('on', state.darkWindows);
+        darkToggle.addEventListener('click', () => {
+            state.darkWindows = !state.darkWindows;
+            darkToggle.classList.toggle('on', state.darkWindows);
+            if (darkKnob) darkKnob.style.transform = state.darkWindows ? 'translateX(20px)' : 'translateX(0)';
+            applyDarkWindows(state.darkWindows);
+            playSound('click');
+        });
+    }
+}
+function openControlCenter() {
+    state.controlCenterOpen = true;
+    const panel = document.getElementById('control-center-panel');
+    const overlay = document.getElementById('control-center-overlay');
+    panel?.classList.remove('hidden');
+    overlay?.classList.remove('hidden');
+    renderControlCenter();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+function closeControlCenter() {
+    state.controlCenterOpen = false;
+    document.getElementById('control-center-panel')?.classList.add('hidden');
+    document.getElementById('control-center-overlay')?.classList.add('hidden');
+}
+/* ──────────────────────────────────────────────────────────────────────────
    Resume Viewer Overlay
    ────────────────────────────────────────────────────────────────────────── */
 function openResume() {
@@ -1232,18 +1531,25 @@ function renderDesktopIcons() {
 }
 function renderMobileGrid() {
     const mobileGrid = document.getElementById('mobile-folders-grid');
-    if (!mobileGrid)
-        return;
-    mobileGrid.innerHTML = PROJECTS.map(project => `
-    <div class="mobile-folder-item" data-id="${project.id}">
-      ${getFolderIconSVG(52)}
-      <span class="mobile-folder-label">${project.name}</span>
+    if (!mobileGrid) return;
+    const items = [
+        ...PROJECTS.map(p => ({ id: p.id, type: 'project', label: p.name, emoji: p.emoji, gradient: p.coverGradient })),
+        { id: 'about', type: 'about', label: 'About Me', emoji: '👤', gradient: 'linear-gradient(135deg,#1e1b4b,#6d28d9)' },
+        { id: 'terminal-m', type: 'terminal', label: 'Terminal', emoji: '⌨️', gradient: 'linear-gradient(135deg,#0a0a0a,#1a3a1a)' },
+    ];
+    mobileGrid.innerHTML = items.map(item => `
+    <div class="mobile-app-icon" data-id="${item.id}" data-type="${item.type}">
+      <div class="mobile-app-icon-bg" style="background: ${item.gradient};">
+        <span class="mobile-app-icon-emoji">${item.emoji}</span>
+      </div>
+      <span class="mobile-folder-label">${item.label}</span>
     </div>
   `).join('');
-    mobileGrid.querySelectorAll('.mobile-folder-item').forEach(el => {
+    mobileGrid.querySelectorAll('.mobile-app-icon').forEach(el => {
         const id = el.getAttribute('data-id') || '';
+        const type = el.getAttribute('data-type') || 'project';
         el.addEventListener('click', () => {
-            openWindow(id, 'project');
+            openWindow(id, type);
         });
     });
 }
@@ -1503,6 +1809,18 @@ function init() {
     // Resume Overlay events
     document.getElementById('dock-resume')?.addEventListener('click', openResume);
     document.getElementById('resume-back')?.addEventListener('click', closeResume);
+    // Terminal Dock
+    document.getElementById('dock-terminal')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openWindow('terminal', 'terminal');
+    });
+    // Control Center
+    document.getElementById('control-center-trigger')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (state.controlCenterOpen) { closeControlCenter(); }
+        else { openControlCenter(); }
+    });
+    document.getElementById('control-center-overlay')?.addEventListener('click', closeControlCenter);
     // Dock items
     document.getElementById('dock-mail')?.addEventListener('click', () => {
         window.location.href = `mailto:${PROFILE.email}?subject=Hi%20Sakshi%20—%20from%20your%20portfolio`;

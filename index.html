@@ -42,6 +42,9 @@
           <div class="menu-icon" id="search-trigger" title="Search (⌘F)">
             <i data-lucide="search" style="width: 14px; height: 14px;"></i>
           </div>
+          <div class="menu-icon" id="control-center-trigger" title="Control Center">
+            <i data-lucide="sliders-horizontal" style="width: 14px; height: 14px;"></i>
+          </div>
           <span id="menu-date"></span>
           <span id="menu-time" style="font-weight: 500;"></span>
         </div>
@@ -105,6 +108,10 @@
             <img src="public/icons/resume.jpg?v=6" onerror="this.src='public/icons/resume.png?v=6'" alt="Resume" />
             <div class="dock-tooltip">Resume</div>
           </div>
+          <div class="dock-item" id="dock-terminal" title="Terminal">
+            <img src="public/icons/terminal.jpg?v=1" alt="Terminal" />
+            <div class="dock-tooltip">Terminal</div>
+          </div>
           
           <!-- Dynamic Minimized Icons Split -->
           <div id="dock-minimized-divider" class="dock-divider hidden"></div>
@@ -126,6 +133,35 @@
         <div id="spotlight-results"></div>
       </div>
     </div>
+
+    <!-- Control Center Panel -->
+    <div id="control-center-panel" class="hidden">
+      <div class="cc-section">
+        <div class="cc-section-title">Wallpaper</div>
+        <div class="cc-wallpaper-grid" id="cc-wallpaper-grid"></div>
+      </div>
+      <div class="cc-divider"></div>
+      <div class="cc-section">
+        <div class="cc-section-title">Sound Effects</div>
+        <div class="cc-toggle-row">
+          <span class="cc-toggle-label"><i data-lucide="volume-2" style="width:13px;height:13px;margin-right:6px;"></i>UI Sounds</span>
+          <div class="cc-toggle" id="cc-sound-toggle">
+            <div class="cc-toggle-knob" id="cc-sound-knob"></div>
+          </div>
+        </div>
+      </div>
+      <div class="cc-divider"></div>
+      <div class="cc-section">
+        <div class="cc-section-title">Window Style</div>
+        <div class="cc-toggle-row">
+          <span class="cc-toggle-label"><i data-lucide="moon" style="width:13px;height:13px;margin-right:6px;"></i>Dark Windows</span>
+          <div class="cc-toggle" id="cc-dark-toggle">
+            <div class="cc-toggle-knob" id="cc-dark-knob"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="control-center-overlay" class="hidden"></div>
 
     <!-- Resume Viewer Overlay -->
     <div id="resume-viewer" class="hidden">
