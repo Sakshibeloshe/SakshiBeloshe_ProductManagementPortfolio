@@ -35,7 +35,7 @@ const PROFILE = {
   name: "Sakshi Beloshe",
   title: "Product Manager · CS Student, MIT-WPU",
   location: "Pune, India",
-  status: "Open to internships",
+  status: "Open to work",
   email: "beloshe.sakshi04@gmail.com",
   phone: "+91 9970001033",
   linkedin: "https://www.linkedin.com/in/sakshi-beloshe-8b41292aa/",
@@ -57,7 +57,7 @@ const PROFILE = {
   experience: [
     { company: "Infosys, Mysore", role: "Product & Development Intern", years: "Apr 2026 – May 2026" },
     { company: "Fyntrest (Fintech Startup)", role: "Web Developer & Business Analyst", years: "Sept 2024 – Mar 2025" },
-    { company: "MIT World Peace University", role: "B.Tech Computer Science Engineering · CGPA 8.66", years: "2023 – 2027" }
+    { company: "MIT World Peace University", role: "B.Tech Computer Science Engineering · CGPA 8.70", years: "2023 – 2027" }
   ]
 };
 
@@ -1180,19 +1180,14 @@ function renderSpotlightResults(query: string) {
    Resume Viewer Overlay
    ────────────────────────────────────────────────────────────────────────── */
 function openResume() {
-  state.resumeOpen = true;
-  const viewer = document.getElementById('resume-viewer');
-  viewer?.classList.remove('hidden');
-  
-  // Set iframe and link paths
-  const iframe = document.getElementById('resume-iframe') as HTMLIFrameElement;
-  if (iframe && !iframe.src) {
-    iframe.src = PROFILE.resumeUrl;
-  }
-  const downloadBtn = document.getElementById('resume-download') as HTMLAnchorElement;
-  if (downloadBtn) {
-    downloadBtn.href = PROFILE.resumeUrl;
-  }
+    state.resumeOpen = true;
+    document.getElementById('resume-viewer')?.classList.remove('hidden');
+    const url = new URL(PROFILE.resumeUrl, window.location.href).href;
+    const downloadBtn = document.getElementById('resume-download') as HTMLAnchorElement | null;
+    if (downloadBtn) downloadBtn.href = url;
+    // Rendered in-page by resume-viewer.js (pdf.js). If that script didn't load, open the PDF natively.
+    if ((window as any).ResumeViewer) (window as any).ResumeViewer.open(url);
+    else window.open(url, '_blank');
 }
 
 function closeResume() {

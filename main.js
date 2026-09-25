@@ -6,7 +6,7 @@ const PROFILE = {
     name: "Sakshi Beloshe",
     title: "Product Manager · CS Student, MIT-WPU",
     location: "Pune, India",
-    status: "Open to internships",
+    status: "Open to work",
     email: "beloshe.sakshi04@gmail.com",
     phone: "+91 9970001033",
     linkedin: "https://www.linkedin.com/in/sakshi-beloshe-8b41292aa/",
@@ -36,16 +36,42 @@ const PROFILE = {
     experience: [
         { company: "Infosys, Mysore", role: "Product & Development Intern", years: "Apr 2026 – May 2026" },
         { company: "Fyntrest (Fintech Startup)", role: "Web Developer & Business Analyst", years: "Sept 2024 – Mar 2025" },
-        { company: "MIT World Peace University", role: "B.Tech Computer Science Engineering · CGPA 8.66", years: "2023 – 2027" }
+        { company: "MIT World Peace University", role: "B.Tech Computer Science Engineering · CGPA 8.70", years: "2023 – 2027" }
     ]
 };
+/* Wallpapers are layered radial-gradient "meshes" built from Sakshi's own project accent colors
+   (ViCa pink/indigo, Cyster gold/peach/violet, LMS slate/purple) — so the OS chrome and the work on
+   it read as one coherent brand instead of stock desktop backgrounds. All resolution-independent:
+   crisp at any display size, unlike a small photo stretched to fill a 5K desktop. */
 const WALLPAPERS = [
-    { id: 'default',   name: 'Classic',   css: "url('public/wallpaper.jpg') center/cover no-repeat", color: '#7fa8c9' },
-    { id: 'monterey',  name: 'Monterey',  css: 'linear-gradient(160deg,#0f0c29 0%,#302b63 50%,#24243e 100%)', color: '#302b63' },
-    { id: 'sonoma',    name: 'Sonoma',    css: 'linear-gradient(160deg,#833ab4 0%,#fd1d1d 50%,#fcb045 100%)', color: '#fd1d1d' },
-    { id: 'aurora',    name: 'Aurora',    css: 'linear-gradient(160deg,#005c97 0%,#363795 50%,#00b4db 100%)', color: '#00b4db' },
-    { id: 'mojave',    name: 'Mojave',    css: 'linear-gradient(160deg,#2c3e50 0%,#fd746c 50%,#ff9068 100%)', color: '#fd746c' },
-    { id: 'midnight',  name: 'Midnight',  css: 'linear-gradient(160deg,#000000 0%,#0f0c29 50%,#1a1a2e 100%)', color: '#1a1a2e' },
+    { id: 'default', name: 'Classic Photo', css: "url('public/wallpaper.jpg') center/cover no-repeat" },
+    { id: 'aurora', name: 'Aurora', css:
+        'radial-gradient(at 14% 18%, rgba(255,126,179,0.38) 0px, transparent 54%),' +
+        'radial-gradient(at 85% 12%, rgba(108,99,255,0.30) 0px, transparent 54%),' +
+        'radial-gradient(at 82% 88%, rgba(246,211,101,0.32) 0px, transparent 54%),' +
+        'radial-gradient(at 14% 90%, rgba(196,113,237,0.26) 0px, transparent 54%),' +
+        'linear-gradient(180deg, #fbf7f4 0%, #f3f0f6 100%)' },
+    { id: 'meadow', name: 'Meadow', css:
+        'radial-gradient(at 18% 14%, rgba(214,205,138,0.42) 0px, transparent 55%),' +
+        'radial-gradient(at 82% 18%, rgba(255,179,148,0.36) 0px, transparent 55%),' +
+        'radial-gradient(at 72% 84%, rgba(140,181,138,0.34) 0px, transparent 55%),' +
+        'radial-gradient(at 16% 86%, rgba(255,126,179,0.24) 0px, transparent 55%),' +
+        'linear-gradient(180deg, #f6f3ea 0%, #eef2ea 100%)' },
+    { id: 'cove', name: 'Cove', css:
+        'radial-gradient(at 20% 18%, rgba(78,67,118,0.65) 0px, transparent 56%),' +
+        'radial-gradient(at 86% 28%, rgba(43,88,118,0.60) 0px, transparent 56%),' +
+        'radial-gradient(at 70% 88%, rgba(108,99,255,0.36) 0px, transparent 56%),' +
+        'linear-gradient(160deg, #1b2735 0%, #0f1620 100%)' },
+    { id: 'ember', name: 'Ember', css:
+        'radial-gradient(at 16% 24%, rgba(253,160,133,0.55) 0px, transparent 55%),' +
+        'radial-gradient(at 82% 14%, rgba(246,211,101,0.38) 0px, transparent 55%),' +
+        'radial-gradient(at 76% 86%, rgba(196,113,237,0.42) 0px, transparent 55%),' +
+        'linear-gradient(160deg, #2b1b2e 0%, #1a1220 100%)' },
+    { id: 'midnight', name: 'Midnight', css:
+        'radial-gradient(at 22% 20%, rgba(108,99,255,0.20) 0px, transparent 55%),' +
+        'radial-gradient(at 80% 78%, rgba(255,126,179,0.14) 0px, transparent 55%),' +
+        'linear-gradient(160deg, #06060a 0%, #0d0d10 100%)' },
+    { id: 'photo', name: 'Classic Photo', css: "url('public/wallpaper.jpg') center/cover no-repeat" },
 ];
 const PROJECTS = [
     {
@@ -793,8 +819,9 @@ function getAboutPageHTML() {
   `).join('');
     return `
     <div>
-      <div class="window-cover" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #4c1d95 60%, #6d28d9 100%); position: relative; overflow: hidden;">
-        <div style="position: absolute; inset: 0; background: url('public/about_widget.jpg') center/cover no-repeat; opacity: 0.15;"></div>
+      <div class="window-cover" style="background: linear-gradient(135deg, #f0f4ff 0%, #e8edf8 40%, #dde4f0 100%); position: relative; overflow: hidden;">
+        <div style="position: absolute; inset: 0; background: url('public/about_widget.jpg') center/cover no-repeat; opacity: 0.08; mix-blend-mode: luminosity;"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 100%);"></div>
       </div>
       <div class="window-page-content">
         <div style="display: flex; align-items: flex-start; gap: 18px; margin-bottom: 24px; flex-wrap: wrap;">
@@ -803,7 +830,7 @@ function getAboutPageHTML() {
             <h1 style="font-size: 23px; font-weight: 800; color: #0f172a; margin: 0 0 4px; letter-spacing: -0.02em;">${PROFILE.name}</h1>
             <p style="font-size: 13px; color: #475569; margin: 0 0 10px; line-height: 1.4;">${PROFILE.title} · ${PROFILE.location}</p>
             <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-              <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 99px; background: rgba(109,40,217,0.08); color: #6d28d9; border: 1px solid rgba(109,40,217,0.18);">${PROFILE.status}</span>
+              <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 99px; background: rgba(22,163,74,0.09); color: #15803d; border: 1px solid rgba(22,163,74,0.22);">${PROFILE.status}</span>
               <span style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 99px; background: rgba(234,179,8,0.08); color: #b45309; border: 1px solid rgba(234,179,8,0.2);">&#127942; WWDC 2026 Winner</span>
             </div>
           </div>
@@ -1390,7 +1417,7 @@ function renderControlCenter() {
         grid.innerHTML = WALLPAPERS.map(wp => `
           <div class="cc-wp-swatch ${state.currentWallpaper === wp.id ? 'active' : ''}"
                data-id="${wp.id}"
-               style="background: ${wp.css.startsWith('url') ? '#7fa8c9' : wp.color};"
+               style="background: ${wp.css};"
                title="${wp.name}">
             <span class="cc-wp-name">${wp.name}</span>
           </div>
@@ -1445,22 +1472,15 @@ function closeControlCenter() {
    ────────────────────────────────────────────────────────────────────────── */
 function openResume() {
     state.resumeOpen = true;
-    const viewer = document.getElementById('resume-viewer');
-    viewer?.classList.remove('hidden');
-    // Build absolute URL for the resume PDF (needed for Google Docs Viewer)
-    const absoluteResumeUrl = new URL(PROFILE.resumeUrl, window.location.href).href;
-    // Use Google Docs Viewer so PDF renders inline even on GitHub Pages,
-    // which forces downloads via Content-Disposition: attachment headers.
-    const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(absoluteResumeUrl)}&embedded=true`;
-    const iframe = document.getElementById('resume-iframe');
-    if (iframe && !iframe.src) {
-        iframe.src = googleDocsViewerUrl;
-    }
+    document.getElementById('resume-viewer')?.classList.remove('hidden');
+    const url = new URL(PROFILE.resumeUrl, window.location.href).href;
     const downloadBtn = document.getElementById('resume-download');
-    if (downloadBtn) {
-        downloadBtn.href = absoluteResumeUrl;
-    }
+    if (downloadBtn) downloadBtn.href = url;
+    // Rendered in-page by resume-viewer.js (pdf.js). If that script didn't load, open the PDF natively.
+    if (window.ResumeViewer) window.ResumeViewer.open(url);
+    else window.open(url, '_blank');
 }
+
 function closeResume() {
     state.resumeOpen = false;
     const viewer = document.getElementById('resume-viewer');
@@ -1697,27 +1717,43 @@ function renderDock() {
     if (minimizedList.length === 0) {
         minimizedContainer.innerHTML = '';
         minimizedDivider.classList.add('hidden');
-        return;
     }
-    minimizedDivider.classList.remove('hidden');
-    minimizedContainer.innerHTML = minimizedList.map(id => {
-        const isAbout = id === 'about';
-        const label = isAbout ? "About Me" : (PROJECTS.find(p => p.id === id)?.name || "");
-        return `
-      <div class="dock-item" data-restore-id="${id}" title="${label}">
-        <div style="width: ${state.isMobile ? 42 : 50}px; height: ${state.isMobile ? 42 : 50}px; display: flex; align-items: center; justify-content: center;">
-          ${getFolderIconSVG(state.isMobile ? 42 : 50)}
+    else {
+        minimizedDivider.classList.remove('hidden');
+        minimizedContainer.innerHTML = minimizedList.map(id => {
+            const isAbout = id === 'about';
+            const isTerminal = id === 'terminal';
+            const label = isAbout ? "About Me" : isTerminal ? "Terminal" : (PROJECTS.find(p => p.id === id)?.name || "");
+            const iconSize = state.isMobile ? 38 : 44;
+            return `
+      <div class="dock-item minimized" data-restore-id="${id}" aria-label="${label}">
+        <div style="width: ${iconSize}px; height: ${iconSize}px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.08); border-radius: 12px; overflow: hidden;">
+          ${getFolderIconSVG(iconSize)}
         </div>
-        <div class="dock-tooltip">${label}</div>
+        <div class="dock-tooltip">${label} (minimized)</div>
+        <div class="dock-item-dot"></div>
       </div>
     `;
-    }).join('');
-    minimizedContainer.querySelectorAll('.dock-item').forEach(el => {
-        el.addEventListener('click', () => {
-            const id = el.getAttribute('data-restore-id') || '';
-            restoreWindow(id);
+        }).join('');
+        minimizedContainer.querySelectorAll('.dock-item').forEach(el => {
+            el.addEventListener('click', () => {
+                const id = el.getAttribute('data-restore-id') || '';
+                restoreWindow(id);
+            });
         });
-    });
+    }
+    // Update open-indicator dots on the static dock items
+    const staticDockMap = {
+        'about': null,   // no static dock item for About
+        'terminal': 'dock-terminal',
+    };
+    PROJECTS.forEach(p => { staticDockMap[p.id] = null; });
+    // Terminal dot
+    const terminalDot = document.getElementById('terminal-dock-dot');
+    if (terminalDot) {
+        const termOpen = state.windows.some(w => w.id === 'terminal') && !state.minimized.includes('terminal');
+        terminalDot.classList.toggle('hidden', !termOpen);
+    }
 }
 /* ──────────────────────────────────────────────────────────────────────────
    System Clock

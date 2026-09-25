@@ -6,13 +6,18 @@
     <title>Sakshi Beloshe — Product Manager</title>
     <meta name="description" content="Portfolio of Sakshi Beloshe, Product Manager & CS Student · MIT-WPU — ViCa (Apple WWDC 2026 Winner), Cyster, and Loan Management System." />
     <link rel="stylesheet" href="style.css" />
-    <!-- Load Lucide Icons CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Load Lucide Icons CDN. Pinned (not @latest): Lucide 1.0 dropped all brand icons
+         (GitHub, LinkedIn, etc.), so an unpinned version can silently break icons on any
+         future deploy. 0.525.0 has every generic glyph this app uses elsewhere (search,
+         sliders-horizontal, arrow-left, x, download, moon, volume-2). The dock icons below
+         don't use this CDN at all — they're hand-drawn inline SVG, so they always render
+         even if this script is slow or blocked. -->
+    <script src="https://unpkg.com/lucide@0.525.0"></script>
   </head>
   <body>
     <!-- Boot Screen -->
     <div id="boot-screen">
-      <img src="public/logo.jpg" alt="Logo" class="boot-logo" style="width: 80px; height: 80px; object-fit: contain; filter: invert(1); mix-blend-mode: screen;" />
+      <div class="boot-logo brand-mark" role="img" aria-label="Logo"></div>
       <div class="boot-progress-container">
         <div id="boot-progress-bar"></div>
       </div>
@@ -28,7 +33,7 @@
       <div id="menu-bar">
         <div class="menu-left">
           <div class="menu-item bold" id="apple-menu-trigger">
-            <img src="public/logo.jpg" alt="Logo" />
+            <div class="brand-mark" role="img" aria-label="Apple menu"></div>
           </div>
           <div class="menu-item" data-menu="Finder">Finder</div>
           <div class="menu-item" data-menu="File">File</div>
@@ -84,38 +89,56 @@
       <!-- Windows container -->
       <div id="windows-container"></div>
 
-      <!-- Dock -->
+      <!-- Dock
+           Icons are one consistent system: a coloured squircle per app + a small hand-drawn
+           inline SVG glyph, instead of six differently-styled image files or third-party icons
+           loaded from a CDN. Fully self-contained — dock always renders correctly even if a
+           CDN is slow, blocked, or (as happened to Lucide's brand icons) removes an icon outright.
+           Magnification-on-approach is added by dock-magnify.js. -->
       <div id="dock">
         <div class="dock-wrapper">
-          <div class="dock-item" id="dock-search" title="Search">
-            <img src="public/icons/search.jpg?v=6" onerror="this.src='public/icons/search.png?v=6'" alt="Search" />
+          <div class="dock-item" id="dock-search" aria-label="Search">
+            <div class="dock-icon dock-icon--search" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.8" cy="10.8" r="6.8"/><line x1="20.5" y1="20.5" x2="15.9" y2="15.9"/></svg>
+            </div>
             <div class="dock-tooltip">Search</div>
           </div>
           <div class="dock-divider"></div>
-          <div class="dock-item" id="dock-mail" title="Mail">
-            <img src="public/icons/mail.jpg?v=6" onerror="this.src='public/icons/mail.png?v=6'" alt="Mail" />
+          <div class="dock-item" id="dock-mail" aria-label="Mail">
+            <div class="dock-icon dock-icon--mail" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="M4 7l8 6 8-6"/></svg>
+            </div>
             <div class="dock-tooltip">Mail</div>
           </div>
-          <div class="dock-item" id="dock-linkedin" title="LinkedIn">
-            <img src="public/icons/linkedin.jpg?v=6" onerror="this.src='public/icons/linkedin.png?v=6'" alt="LinkedIn" />
+          <div class="dock-item" id="dock-linkedin" aria-label="LinkedIn">
+            <div class="dock-icon dock-icon--linkedin" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="9" width="4" height="12" rx="0.6"/><circle cx="5" cy="4.5" r="2.4"/><path d="M11 9h3.8v2.1h.05c.53-.95 1.83-2.1 3.77-2.1 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.02-3.06-1.96-3.06-1.96 0-2.26 1.44-2.26 2.96V21h-4z"/></svg>
+            </div>
             <div class="dock-tooltip">LinkedIn</div>
           </div>
-          <div class="dock-item" id="dock-github" title="GitHub">
-            <img src="public/icons/github.jpg?v=6" onerror="this.src='public/icons/github.png?v=6'" alt="GitHub" />
+          <div class="dock-item" id="dock-github" aria-label="GitHub">
+            <div class="dock-icon dock-icon--github" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polyline points="8.5 8 4.5 12 8.5 16"/><polyline points="15.5 8 19.5 12 15.5 16"/><line x1="13.2" y1="6" x2="10.8" y2="18"/></svg>
+            </div>
             <div class="dock-tooltip">GitHub</div>
           </div>
-          <div class="dock-item" id="dock-resume" title="Resume">
-            <img src="public/icons/resume.jpg?v=6" onerror="this.src='public/icons/resume.png?v=6'" alt="Resume" />
+          <div class="dock-item" id="dock-resume" aria-label="Resume">
+            <div class="dock-icon dock-icon--resume" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5h7l4 4V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1z"/><path d="M14 3.5V8h4"/><line x1="8.5" y1="12" x2="15.5" y2="12"/><line x1="8.5" y1="15.3" x2="15.5" y2="15.3"/><line x1="8.5" y1="18.6" x2="12.5" y2="18.6"/></svg>
+            </div>
             <div class="dock-tooltip">Resume</div>
           </div>
-          <div class="dock-item" id="dock-terminal" title="Terminal">
-            <img src="public/icons/terminal.jpg?v=1" alt="Terminal" />
+          <div class="dock-item" id="dock-terminal" aria-label="Terminal">
+            <div class="dock-icon dock-icon--terminal" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.2"/><polyline points="7 9.5 10.5 12.3 7 15"/><line x1="12.5" y1="15" x2="16.5" y2="15"/></svg>
+            </div>
             <div class="dock-tooltip">Terminal</div>
+            <div id="terminal-dock-dot" class="dock-item-dot hidden"></div>
           </div>
-          
-          <!-- Dynamic Minimized Icons Split -->
+
+          <!-- Dynamic Open / Minimized Windows Split -->
           <div id="dock-minimized-divider" class="dock-divider hidden"></div>
-          <div id="dock-minimized-items" style="display: flex; gap: 4px;"></div>
+          <div id="dock-minimized-items" style="display: flex; gap: 12px; align-items: flex-end;"></div>
         </div>
       </div>
     </div>
@@ -175,11 +198,16 @@
         </a>
       </div>
       <div class="resume-body">
-        <iframe id="resume-iframe" title="Resume" src=""></iframe>
+        <div id="resume-scroll">
+          <div id="resume-status" role="status"></div>
+          <div id="resume-pages"></div>
+        </div>
       </div>
     </div>
 
     <!-- Application Script -->
+    <script type="module" src="resume-viewer.js"></script>
     <script src="main.js"></script>
+    <script src="dock-magnify.js"></script>
   </body>
 </html>
